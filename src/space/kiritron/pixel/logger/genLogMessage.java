@@ -22,7 +22,7 @@ public class genLogMessage {
     private final static String ERROR = consoleColors.RED + "ОШИБКА" + consoleColors.RESET;
 
     /**
-     * Вывод сообщения в консоль.
+     * Генерация вывода сообщения в консоль.
      * @param type Тип сообщения. 0 - без типа, 1 - Информация, 2 - Предупреждение, 3 - Ошибка.
      * @param timeWithDate true - если нужно сгенерировать сообщение не только, со временем, но и с датой. false - если нужно только время.
      * @param message Сообщение, которое нужно вывести в консоль.
