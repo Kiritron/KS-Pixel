@@ -6,7 +6,7 @@ import java.util.GregorianCalendar;
 /**
  * Класс со строками текущих дат и времени.
  * @author Киритрон Стэйблкор
- * @version 1.0
+ * @version 1.1
  */
 
 public class GDate {
@@ -67,6 +67,10 @@ public class GDate {
         String A = Integer.toString(CurHour);
         int B = CurHour;
 
+        if (B == 0) {
+            A = "00";
+        }
+
         if (B == 1) {
             A = "01";
         }
@@ -110,6 +114,10 @@ public class GDate {
         String A = Integer.toString(CurMinutes);
         int B = CurMinutes;
 
+        if (B == 0) {
+            A = "00";
+        }
+
         if (B == 1) {
             A = "01";
         }
@@ -152,6 +160,10 @@ public class GDate {
     private static String CurSecondsSTR() {
         String A = Integer.toString(CurSeconds);
         int B = CurSeconds;
+
+        if (B == 0) {
+            A = "00";
+        }
 
         if (B == 1) {
             A = "01";
