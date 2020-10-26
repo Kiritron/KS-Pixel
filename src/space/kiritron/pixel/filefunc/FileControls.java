@@ -50,6 +50,7 @@ public class FileControls {
      * Создание файла.
      * @param filename - Путь до файла.
      * @return возвращает результат создания. TRUE - файл создан, FALSE - файл создать не удалось.
+     * @throws IOException Сбой при обработке файла.
      */
     public static boolean CreateFile(String filename) throws IOException {
         File TargetFile = new File(filename);
@@ -59,8 +60,9 @@ public class FileControls {
 
     /**
      * Прочитать файл.
-     * @param filename - Путь до файла.
+     * @param filename Путь до файла.
      * @return возвращает данные, которые удалось вытянуть из файла.
+     * @throws IOException Сбой при обработке файла. Например, может быть, если файл не будет найден.
      */
     public static String ReadFile(String filename) throws IOException {
         BufferedReader reader = new BufferedReader( new FileReader (filename));

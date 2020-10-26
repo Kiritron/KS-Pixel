@@ -38,6 +38,7 @@ public class FileDownloads {
      * @param filepath Адрес ФАЙЛА, в который будет записан скачиваемый файл. Если по этому адресу файла нет, он будет создан.
      * @param method Метод загрузки. Доступны NIO и InputStream. Можете использовать готовые переменные
      *               FileDownloads.NIO и FileDownloads.InputStream или true и false соответственно.
+     * @throws IOException Сбой в обработке информации. Может произойти даже на этапе загрузки и на этапе сохранения.
      */
     public static void downloadFromURL(String URL, String filepath, boolean method) throws IOException {
         if (method) {
