@@ -34,15 +34,18 @@ public class genLogMessage {
     private final static String INFO = "ИНФО";
     private final static String WARN = consoleColors.YELLOW + "ПРЕДУПРЕЖДЕНИЕ" + consoleColors.RESET;
     private final static String ERROR = consoleColors.RED + "ОШИБКА" + consoleColors.RESET;
+    private final static String WARN_NOCOLOR = "ПРЕДУПРЕЖДЕНИЕ";
+    private final static String ERROR_NOCOLOR = "ОШИБКА";
 
     /**
      * Генерация вывода сообщения в консоль.
      * @param type Тип сообщения. 0 - без типа, 1 - Информация, 2 - Предупреждение, 3 - Ошибка.
      * @param timeWithDate true - если нужно сгенерировать сообщение не только, со временем, но и с датой. false - если нужно только время.
+     * @param color true - к типу сообщения добавляется цветовой код, false - к типу сообщения цветовой код добавлен не будет
      * @param message Сообщение, которое нужно вывести в консоль.
      * @return Возвращает сгенерированное сообщение.
      */
-    public static String gen(byte type, boolean timeWithDate, String message) {
+    public static String gen(byte type, boolean timeWithDate, boolean color, String message) {
         if (type == 1) {
             if (timeWithDate == false) {
                 return "[" + TADClass.GetTimeWithSeconds + " " + INFO + "]: " + message;
@@ -51,15 +54,31 @@ public class genLogMessage {
             }
         } else if (type == 2) {
             if (timeWithDate == false) {
-                return "[" + TADClass.GetTimeWithSeconds + " " + WARN + "]: " + message;
+                if (color) {
+                    return "[" + TADClass.GetTimeWithSeconds + " " + WARN + "]: " + message;
+                } else {
+                    return "[" + TADClass.GetTimeWithSeconds + " " + WARN_NOCOLOR + "]: " + message;
+                }
             } else {
-                return "[" + TADClass.GetCurDateAndTimeWithSeconds + " " + WARN + "]: " + message;
+                if (color) {
+                    return "[" + TADClass.GetCurDateAndTimeWithSeconds + " " + WARN + "]: " + message;
+                } else {
+                    return "[" + TADClass.GetCurDateAndTimeWithSeconds + " " + WARN_NOCOLOR + "]: " + message;
+                }
             }
         } else if (type == 3) {
             if (timeWithDate == false) {
-                return "[" + TADClass.GetTimeWithSeconds + " " + ERROR + "]: " + message;
+                if (color) {
+                    return "[" + TADClass.GetTimeWithSeconds + " " + ERROR + "]: " + message;
+                } else {
+                    return "[" + TADClass.GetTimeWithSeconds + " " + ERROR_NOCOLOR + "]: " + message;
+                }
             } else {
-                return "[" + TADClass.GetCurDateAndTimeWithSeconds + " " + ERROR + "]: " + message;
+                if (color) {
+                    return "[" + TADClass.GetCurDateAndTimeWithSeconds + " " + ERROR + "]: " + message;
+                } else {
+                    return "[" + TADClass.GetCurDateAndTimeWithSeconds + " " + ERROR_NOCOLOR + "]: " + message;
+                }
             }
         } else {
             if (timeWithDate == false) {
