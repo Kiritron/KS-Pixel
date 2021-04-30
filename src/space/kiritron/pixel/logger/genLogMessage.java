@@ -45,7 +45,7 @@ public class genLogMessage {
      * @param message Сообщение, которое нужно вывести в консоль.
      * @return Возвращает сгенерированное сообщение.
      */
-    public static String gen(byte type, boolean timeWithDate, boolean color, String message) {
+    public static String gen(int type, boolean timeWithDate, boolean color, String message) {
         if (type == 1) {
             if (timeWithDate == false) {
                 return "[" + TADClass.GetTimeWithSeconds + " " + INFO + "]: " + message;
