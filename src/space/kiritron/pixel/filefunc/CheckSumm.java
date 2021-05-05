@@ -29,7 +29,7 @@ import java.security.NoSuchAlgorithmException;
 public class CheckSumm {
     /**
      * Генерация контрольной суммы.
-     * @param Method Алгоритм, по которому нужно производить операцию хеширования. В библиотеке в классе space.kiritron.pixel.genhash.Gen доступны: MD5, SHA1, SHA256, SHA384, SHA512. Можете использовать и свой параметр, если Вы понимаете, что делаете.
+     * @param Method Алгоритм, по которому нужно производить операцию хеширования. В библиотеке в классе space.kiritron.pixel.HashGenerator доступны: MD5, SHA1, SHA256, SHA384, SHA512. Можете использовать и свой параметр, если Вы понимаете, что делаете.
      * @param FilePath Путь до файла.
      * @return контрольную сумму в выбранном алгоритме.
      */

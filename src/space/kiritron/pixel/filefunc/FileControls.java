@@ -25,7 +25,7 @@ import java.io.*;
 public class FileControls {
     /**
      * Поиск файла.
-     * @param filename - Путь до файла.
+     * @param filename Путь до файла.
      * @return возвращает результат поиска. TRUE - файл есть, FALSE - файла нет.
      */
 
@@ -37,7 +37,7 @@ public class FileControls {
 
     /**
      * Удаление файла.
-     * @param filename - Путь до файла.
+     * @param filename Путь до файла.
      * @return возвращает результат удаления. TRUE - файл удалён, FALSE - файл удалить не удалось.
      */
     public static boolean DeleteFile(String filename) {
@@ -48,7 +48,7 @@ public class FileControls {
 
     /**
      * Создание файла.
-     * @param filename - Путь до файла.
+     * @param filename Путь до файла.
      * @return возвращает результат создания. TRUE - файл создан, FALSE - файл создать не удалось.
      * @throws IOException Сбой при обработке файла.
      */
@@ -83,8 +83,8 @@ public class FileControls {
 
     /**
      * Записать в файл. Обратите внимание, данный метод перезаписывает данные, а не дополняет их.
-     * @param filename - Путь до файла.
-     * @param data - Данные, которые нужно записать в файл.
+     * @param filename Путь до файла.
+     * @param data Данные, которые нужно записать в файл.
      * @return возвращает результат записи. TRUE - данные записаны в файл, FALSE - данные в файл записать не удалось.
      */
     public static boolean writeToFile(String filename, String data) {
@@ -109,8 +109,8 @@ public class FileControls {
 
     /**
      * Добавить данные в файл. Работает как и writeToFile, но дополняет данные, а не перезаписывает.
-     * @param filename - Путь до файла.
-     * @param data - Данные, которые нужно записать в файл.
+     * @param filename Путь до файла.
+     * @param data Данные, которые нужно записать в файл.
      * @return возвращает результат перезаписи. TRUE - данные перезаписаны в файл, FALSE - данные в файл записать не удалось.
      */
     public static boolean addDataToFile(String filename, String data) {

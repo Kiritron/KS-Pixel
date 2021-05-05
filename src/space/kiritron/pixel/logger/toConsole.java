@@ -23,7 +23,7 @@ package space.kiritron.pixel.logger;
 public class toConsole {
     /**
      * Вывод в консоль. Да, это велосипед.
-     * @param message - Сообщение, которое нужно вывести в консоль.
+     * @param message Сообщение, которое нужно вывести в консоль.
      */
     public static void print(String message) {
         System.out.println(message);

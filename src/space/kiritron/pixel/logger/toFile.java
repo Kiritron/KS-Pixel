@@ -53,15 +53,15 @@ public class toFile {
 
     /**
      * Запись лог файла.
-     * @param log_message - Сообщение, которое нужно записать в лог файл.
-     * @param prefixLogFile - Префикс лог файла.
+     * @param log_message Сообщение, которое нужно записать в лог файл.
+     * @param prefixLogFile Префикс лог файла.
      * @return результат выполнения. Если равно TRUE, то всё в порядке, а если FALSE, то что-то пошло не так.
      */
     public static boolean WriteLog(String log_message, String prefixLogFile) { return LogFileWriter(prefixLogFile, log_message); }
 
     /**
      * Запись лог файла, но уже без префикса в названии лог файла.
-     * @param log_message - Сообщение, которое нужно записать в лог файл.
+     * @param log_message Сообщение, которое нужно записать в лог файл.
      * @return результат выполнения. Если равно TRUE, то всё в порядке, а если FALSE, то что-то пошло не так.
      */
     public static boolean WriteLogNoPrefix(String log_message) { return LogFileWriter("", log_message); }

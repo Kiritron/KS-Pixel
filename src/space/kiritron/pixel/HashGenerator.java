@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package space.kiritron.pixel.genhash;
+package space.kiritron.pixel;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -23,10 +23,11 @@ import java.security.MessageDigest;
  * @author Киритрон Стэйблкор и MR.REX
  */
 
-public class Gen {
-    //Киритрон: В библиотеке от Рекса, был метод для генерации хеша в MD2.
-    //Я не стал его добавлять в код, так как данный алгоритм признали
-    //взломанным и им уже не пользуются.
+public class HashGenerator {
+    // Киритрон: В библиотеке от Рекса, был метод для генерации хеша в MD2.
+    // Я не стал его добавлять в код, так как данный алгоритм признали
+    // взломанным и им уже не пользуются.
+    // Киритрон: Потом ещё и MD5... Но MD5 сейчас стандарт, так что ладно. Пусть остаётся.
     public final static String MD5 = "MD5",
                                SHA1 = "SHA-1",
                                SHA256 = "SHA-256",
@@ -39,7 +40,7 @@ public class Gen {
      * @param Message Сообщение, которое нужно пропустить через алгоритм выбранный алгоритм.
      * @return возвращает хеш в выбранном алгоритме.
      */
-    public static String Hash(String Method, String Message) {
+    public static String Gen(String Method, String Message) {
         String Hash = null;
         try {
             MessageDigest MD = MessageDigest.getInstance(Method);

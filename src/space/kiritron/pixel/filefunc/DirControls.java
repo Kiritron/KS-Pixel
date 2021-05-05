@@ -25,7 +25,7 @@ import java.io.File;
 public class DirControls {
     /**
      * Поиск каталога.
-     * @param dirname - Путь до каталога.
+     * @param dirname Путь до каталога.
      * @return возвращает результат поиска. TRUE - каталог есть, FALSE - каталога нет.
      */
     public static boolean SearchDir(String dirname) {
@@ -36,7 +36,7 @@ public class DirControls {
 
     /**
      * Создать каталог.
-     * @param dirname - Путь до каталога.
+     * @param dirname Путь до каталога.
      * @return возвращает результат создания. TRUE - каталог создан, FALSE - что-то пошло не так при создании каталога.
      */
     public static boolean CreateDir(String dirname) {
@@ -47,7 +47,7 @@ public class DirControls {
 
     /**
      * Удаление каталога.
-     * @param dirname - Путь до каталога.
+     * @param dirname Путь до каталога.
      * @return возвращает результат удаления. TRUE - каталог удалён, FALSE - каталог не удалось удалить.
      */
     public static boolean DeleteDir(String dirname) {
@@ -58,7 +58,7 @@ public class DirControls {
 
     /**
      * Принудительное удаление. Удаляет каталог со всем, что есть внутри. (Экспериментально)
-     * @param dirname - Путь до каталога.
+     * @param dirname Путь до каталога.
      * @return возвращает результат удаления. TRUE - каталог удалён, FALSE - каталог не удалось удалить.
      */
     public static boolean ForceDeleteDir(String dirname) {

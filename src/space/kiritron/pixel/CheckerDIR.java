@@ -27,7 +27,7 @@ import static space.kiritron.pixel.filefunc.DirControls.SearchDir;
 public class CheckerDIR {
     /**
      * Поиск каталога в директории, где запущено данное ПО. Если каталога нет, то он будет создан.
-     * @param dir - Путь до каталога.
+     * @param dir Путь до каталога.
      */
     public static void Check(String dir) {
         if (SearchDir(GetPathOfAPP.GetPathWithSep() + dir) == false) {
@@ -37,7 +37,7 @@ public class CheckerDIR {
 
     /**
      * Поиск каталога вне директории, где запущено данное ПО. Если каталога нет, то он будет создан.
-     * @param path - Путь до каталога.
+     * @param path Путь до каталога.
      */
     public static void CheckOut(String path) {
         if (SearchDir(path) == false) {
