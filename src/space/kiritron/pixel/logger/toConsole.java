@@ -28,4 +28,12 @@ public class toConsole {
     public static void print(String message) {
         System.out.println(message);
     }
+
+    /**
+     * Вывод в консоль сообщения об ошибке. Да, это тоже велосипед.
+     * @param message Сообщение об ошибке, которое нужно вывести в консоль.
+     */
+    public static void print_error(String message) {
+        System.err.println(message);
+    }
 }
