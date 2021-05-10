@@ -24,16 +24,19 @@ import static space.kiritron.pixel.logger.toFile.WriteLogNoPrefix;
 
 public class doubleLogWriter {
     /**
-     * Вывод и в консоль, и в лог файл. Сообщения будут без указания даты, но к дате будут привязаны логфайлы.
-     * @param code Тип сообщения. 0 - без типа, 1 - Информация, 2 - Предупреждение, 3 - Ошибка.
+     * Вывод и в консоль, и в лог файл. Сообщения будут без указания даты, но к дате будут привязаны лог-файлы. Цветовые коды добавляются только при выводе в консоль, а лог-файле цветовых кодов не будет.
+     * @param type Тип сообщения. 0(или любое другое свободное число, но рекомендуется 0) - без типа, 1 - Информация, 2 - Предупреждение, 3 - Ошибка. Если без типа,
+     *             то type_style и type_color перестают на что-либо влиять и вы можете установить их как 0, хотя необязательно и является
+     *             лишь рекомендацией.
+     * @param type_style Стиль типа. 1(или любое другое свободное число) - стандарт(Прим. "ИНФО"), 2 - сокращённый(Прим. "И"), 3 - символический(Прим. "i").
+     * @param type_color true - к типу сообщения добавляется цветовой код, false - к типу сообщения цветовой код добавлен не будет
      * @param message Сообщение, которое нужно вывести в консоль.
-     * @return ничего. Метод просто исполняется.
      */
-    public static void write(int code, String message) {
+    public static void write(int type, int type_style, boolean type_color, String message) {
         String log_message;
-        log_message = genLogMessage.gen(code, false, true, message);
+        log_message = genLogMessage.gen(type, type_style, type_color, false, message);
         toConsole.print(log_message);
-        log_message = genLogMessage.gen(code, false, false, message);
+        log_message = genLogMessage.gen(type, type_style, false, false, message);
         WriteLogNoPrefix(log_message);
     }
 }

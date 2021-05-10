@@ -29,63 +29,91 @@ import java.io.IOException;
  */
 
 public class genLogMessage {
-    private static GDate TADClass = new GDate();
-
-    private final static String INFO = "ИНФО";
-    private final static String WARN = consoleColors.YELLOW + "ПРЕДУПРЕЖДЕНИЕ" + consoleColors.RESET;
-    private final static String ERROR = consoleColors.RED + "ОШИБКА" + consoleColors.RESET;
-    private final static String WARN_NOCOLOR = "ПРЕДУПРЕЖДЕНИЕ";
-    private final static String ERROR_NOCOLOR = "ОШИБКА";
-
     /**
-     * Генерация вывода сообщения в консоль.
-     * @param type Тип сообщения. 0 - без типа, 1 - Информация, 2 - Предупреждение, 3 - Ошибка.
-     * @param timeWithDate true если нужно сгенерировать сообщение не только, со временем, но и с датой. false - если нужно только время.
-     * @param color true к типу сообщения добавляется цветовой код, false - к типу сообщения цветовой код добавлен не будет
-     * @param message Сообщение, которое нужно вывести в консоль.
+     * Генерация сообщения для последующего вывода в консоль или лог-файл.
+     * @param type Тип сообщения. 0(или любое другое свободное число, но рекомендуется 0) - без типа, 1 - Информация, 2 - Предупреждение, 3 - Ошибка. Если без типа,
+     *             то type_style и type_color перестают на что-либо влиять и вы можете установить их как 0, хотя необязательно и является
+     *             лишь рекомендацией.
+     * @param type_style Стиль типа. 1(или любое другое свободное число) - стандарт(Прим. "ИНФО"), 2 - сокращённый(Прим. "И"), 3 - символический(Прим. "i").
+     * @param type_color true - к типу сообщения добавляется цветовой код, false - к типу сообщения цветовой код добавлен не будет
+     * @param timeWithDate true, если нужно сгенерировать сообщение не только, со временем, но и с датой. false - если нужно только время.
+     * @param message Сгенерированное сообщение для последующего вывода в консоль или лог-файл.
      * @return Возвращает сгенерированное сообщение.
      */
-    public static String gen(int type, boolean timeWithDate, boolean color, String message) {
-        if (type == 1) {
-            if (timeWithDate == false) {
-                return "[" + TADClass.GetTimeWithSeconds + " " + INFO + "]: " + message;
-            } else {
-                return "[" + TADClass.GetCurDateAndTimeWithSeconds + " " + INFO + "]: " + message;
+    public static String gen(int type, int type_style, boolean type_color, boolean timeWithDate, String message) {
+        String TimeString;
+        String TYPE = null; // (:<)
+
+        if (timeWithDate) {
+            TimeString = GDate.GetTimeWithSeconds;
+        } else {
+            TimeString = GDate.GetCurDateAndTimeWithSeconds;
+        }
+
+        if (type != 0) {
+            if (type == 1) {
+                if (type_style != 2 && type_style != 3) {
+                    TYPE = "ИНФО";
+                }
+
+                if (type_style == 2) {
+                    TYPE = "И";
+                }
+
+                if (type_style == 3) {
+                    TYPE = "i";
+                }
             }
-        } else if (type == 2) {
-            if (timeWithDate == false) {
-                if (color) {
-                    return "[" + TADClass.GetTimeWithSeconds + " " + WARN + "]: " + message;
-                } else {
-                    return "[" + TADClass.GetTimeWithSeconds + " " + WARN_NOCOLOR + "]: " + message;
+
+            if (type == 2) {
+                if (type_style != 2 && type_style != 3) {
+                    TYPE = "ПРЕДУПРЕЖДЕНИЕ";
                 }
-            } else {
-                if (color) {
-                    return "[" + TADClass.GetCurDateAndTimeWithSeconds + " " + WARN + "]: " + message;
-                } else {
-                    return "[" + TADClass.GetCurDateAndTimeWithSeconds + " " + WARN_NOCOLOR + "]: " + message;
+
+                if (type_style == 2) {
+                    TYPE = "П";
+                }
+
+                if (type_style == 3) {
+                    TYPE = "!";
                 }
             }
-        } else if (type == 3) {
-            if (timeWithDate == false) {
-                if (color) {
-                    return "[" + TADClass.GetTimeWithSeconds + " " + ERROR + "]: " + message;
-                } else {
-                    return "[" + TADClass.GetTimeWithSeconds + " " + ERROR_NOCOLOR + "]: " + message;
+
+            if (type == 3) {
+                if (type_style != 2 && type_style != 3) {
+                    TYPE = "ОШИБКА";
                 }
+
+                if (type_style == 2) {
+                    TYPE = "О";
+                }
+
+                if (type_style == 3) {
+                    TYPE = "x";
+                }
+            }
+
+            if (type_color) {
+                if (TYPE != null) {
+                    if (type == 2) {
+                        TYPE = consoleColors.YELLOW + TYPE + consoleColors.RESET;
+                    }
+
+                    if (type == 3) {
+                        TYPE = consoleColors.RED + TYPE + consoleColors.RESET;
+                    }
+                }
+            }
+        }
+
+        if (TYPE != null) {
+            if (type_style != 2 && type_style != 3) {
+                return "[" + TimeString + " " + TYPE + "]: " + message;
             } else {
-                if (color) {
-                    return "[" + TADClass.GetCurDateAndTimeWithSeconds + " " + ERROR + "]: " + message;
-                } else {
-                    return "[" + TADClass.GetCurDateAndTimeWithSeconds + " " + ERROR_NOCOLOR + "]: " + message;
-                }
+                return "[" + TimeString + "]" + "[" + TYPE + "]: " + message;
             }
         } else {
-            if (timeWithDate == false) {
-                return "[" + TADClass.GetTimeWithSeconds + "]: " + message;
-            } else {
-                return "[" + TADClass.GetCurDateAndTimeWithSeconds + "]: " + message;
-            }
+            return "[" + TimeString + "]: " + message;
         }
     }
 
