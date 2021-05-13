@@ -30,7 +30,7 @@ public class CheckerDIR {
      * @param dir Путь до каталога.
      */
     public static void Check(String dir) {
-        if (SearchDir(GetPathOfAPP.GetPathWithSep() + dir) == false) {
+        if (!SearchDir(GetPathOfAPP.GetPathWithSep() + dir)) {
             CreateDir(GetPathOfAPP.GetPathWithSep() + dir);
         }
     }
@@ -40,7 +40,7 @@ public class CheckerDIR {
      * @param path Путь до каталога.
      */
     public static void CheckOut(String path) {
-        if (SearchDir(path) == false) {
+        if (!SearchDir(path)) {
             CreateDir(path);
         }
     }

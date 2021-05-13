@@ -30,8 +30,7 @@ public class DirControls {
      */
     public static boolean SearchDir(String dirname) {
         File TargetDir = new File(dirname);
-        boolean DirSearched = TargetDir.exists();
-        return DirSearched;
+        return TargetDir.exists();
     }
 
     /**
@@ -41,8 +40,7 @@ public class DirControls {
      */
     public static boolean CreateDir(String dirname) {
         File TargetDir = new File(dirname);
-        boolean DirCreated = TargetDir.mkdir();
-        return DirCreated;
+        return TargetDir.mkdir();
     }
 
     /**
@@ -52,8 +50,7 @@ public class DirControls {
      */
     public static boolean DeleteDir(String dirname) {
         File TargetDir = new File(dirname);
-        boolean DirDeleted = TargetDir.delete();
-        return DirDeleted;
+        return TargetDir.delete();
     }
 
     /**
@@ -75,7 +72,6 @@ public class DirControls {
             }
         }
 
-        boolean DirDeleted = TargetDir.delete();
-        return DirDeleted;
+        return TargetDir.delete();
     }
 }

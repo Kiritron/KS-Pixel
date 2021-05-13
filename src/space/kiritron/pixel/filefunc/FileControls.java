@@ -30,9 +30,8 @@ public class FileControls {
      */
 
     public static boolean SearchFile(String filename) {
-        File TargetFile = new File(filename); 
-        boolean FileFounded = TargetFile.exists();
-        return FileFounded;
+        File TargetFile = new File(filename);
+        return TargetFile.exists();
     }
 
     /**
@@ -42,8 +41,7 @@ public class FileControls {
      */
     public static boolean DeleteFile(String filename) {
         File TargetFile = new File(filename);
-        boolean FileDeleted = TargetFile.delete();
-        return FileDeleted;
+        return TargetFile.delete();
     }
 
     /**
@@ -54,8 +52,7 @@ public class FileControls {
      */
     public static boolean CreateFile(String filename) throws IOException {
         File TargetFile = new File(filename);
-        boolean FileCreated = TargetFile.createNewFile();
-        return FileCreated;
+        return TargetFile.createNewFile();
     }
 
     /**
@@ -200,7 +197,9 @@ public class FileControls {
             return false;
         } finally {
             try {
+                assert is != null;
                 is.close();
+                assert os != null;
                 os.close();
             } catch (IOException e) {
                 return false;

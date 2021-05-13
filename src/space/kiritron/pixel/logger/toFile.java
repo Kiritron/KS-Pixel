@@ -28,14 +28,12 @@ import java.io.IOException;
  */
 
 public class toFile {
-    private static GDate TADClass = new GDate();
-
     private static boolean LogFileWriter(String prefixLogFile, String log_messageFile) {
         File logFile;
         if (prefixLogFile.equals("")) {
-            logFile = new File(GetPathOfAPP.GetPathWithSep() + "logs" + GetPathOfAPP.GetSep() + TADClass.GetDate + ".log");
+            logFile = new File(GetPathOfAPP.GetPathWithSep() + "logs" + GetPathOfAPP.GetSep() + GDate.GetDate + ".log");
         } else {
-            logFile = new File(GetPathOfAPP.GetPathWithSep() + "logs" + GetPathOfAPP.GetSep() + prefixLogFile + "-" + TADClass.GetDate + ".log");
+            logFile = new File(GetPathOfAPP.GetPathWithSep() + "logs" + GetPathOfAPP.GetSep() + prefixLogFile + "-" + GDate.GetDate + ".log");
         }
 
         try {

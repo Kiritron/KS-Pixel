@@ -46,7 +46,7 @@ public class GetOS {
      * Узнать на Windows ли сейчас работает данная программа.
      * @return возвращает boolean значение.
      */
-    public static final boolean isWindows() {
+    public static boolean isWindows() {
         return Get().toLowerCase().contains("windows");
     }
 
@@ -54,7 +54,7 @@ public class GetOS {
      * Узнать на OS X ли сейчас работает данная программа.
      * @return возвращает boolean значение.
      */
-    public static final boolean isMacintosh() {
+    public static boolean isMacintosh() {
         return Get().toLowerCase().contains("mac");
     }
 
@@ -62,7 +62,7 @@ public class GetOS {
      * Узнать на системе с ядром Linux сейчас работает данная программа или нет.
      * @return возвращает boolean значение.
      */
-    public static final boolean isLinux() {
+    public static boolean isLinux() {
         return Get().toLowerCase().contains("linux");
     }
 
