@@ -95,6 +95,7 @@ public class FileControls {
             e.printStackTrace();
         } finally {
             try {
+                assert fr != null;
                 fr.close();
                 Status = true;
             } catch (IOException e) {
@@ -128,6 +129,7 @@ public class FileControls {
             e.printStackTrace();
         } finally {
             try {
+                assert fr != null;
                 fr.close();
                 Status = true;
             } catch (IOException e) {
@@ -202,7 +204,7 @@ public class FileControls {
                 assert os != null;
                 os.close();
             } catch (IOException e) {
-                return false;
+                e.printStackTrace();
             }
         }
     }
