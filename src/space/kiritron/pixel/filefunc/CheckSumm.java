@@ -17,7 +17,10 @@
 package space.kiritron.pixel.filefunc;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.math.BigInteger;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -34,27 +37,22 @@ public class CheckSumm {
      * @return контрольную сумму в выбранном алгоритме.
      */
 
-    public static String Gen(String Method, String FilePath) {
-        MessageDigest md = null;
-        StringBuilder result = new StringBuilder();
-
-        try {
-            md.getInstance(Method);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+    public static String Gen(String Method, String FilePath) throws IOException, NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance(Method);
+        InputStream fis = new FileInputStream(FilePath);
+        int n = 0;
+        byte[] buffer = new byte[8192];
+        while (n != -1) {
+            n = fis.read(buffer);
+            if (n > 0) {
+                digest.update(buffer, 0, n);
+            }
         }
 
-        try (DigestInputStream dis = new DigestInputStream(new FileInputStream(FilePath), md)) {
-            while (dis.read() != -1) ;
-            md = dis.getMessageDigest();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        BigInteger Big = new BigInteger(1, digest.digest());
+        String OUT = Big.toString(16);
+        while (OUT.length() < 32) OUT += "0" + OUT;
 
-        for (byte b : md.digest()) {
-            result.append(String.format("%02x", b));
-        }
-
-        return result.toString();
+        return Big.toString(16);
     }
 }

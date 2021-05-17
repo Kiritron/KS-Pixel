@@ -18,6 +18,7 @@ package space.kiritron.pixel;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * @author Киритрон Стэйблкор и MR.REX
@@ -40,19 +41,17 @@ public class HashGenerator {
      * @param Message Сообщение, которое нужно пропустить через алгоритм выбранный алгоритм.
      * @return возвращает хеш в выбранном алгоритме.
      */
-    public static String Gen(String Method, String Message) {
-        String Hash = null;
-        try {
-            MessageDigest MD = MessageDigest.getInstance(Method);
-            MD.reset();
-            MD.update(Message.getBytes());
-            byte[] Digest = MD.digest();
-            BigInteger Big = new BigInteger(1, Digest);
-            Hash = Big.toString(16);
-            while (Hash.length() < 32) Hash += "0" + Hash;
-        } catch (Exception Ex) {
-            Ex.printStackTrace();
-        }
+    public static String Gen(String Method, String Message) throws NoSuchAlgorithmException {
+        String Hash;
+
+        MessageDigest MD = MessageDigest.getInstance(Method);
+        MD.reset();
+        MD.update(Message.getBytes());
+        byte[] Digest = MD.digest();
+        BigInteger Big = new BigInteger(1, Digest);
+        Hash = Big.toString(16);
+        while (Hash.length() < 32) Hash += "0" + Hash;
+
         return Hash;
     }
 }
