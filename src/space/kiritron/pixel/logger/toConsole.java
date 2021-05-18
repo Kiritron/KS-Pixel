@@ -25,7 +25,7 @@ public class toConsole {
      * Вывод в консоль. Да, это велосипед.
      * @param message Сообщение, которое нужно вывести в консоль.
      */
-    public static void print(String message) {
+    public static void print(Object message) {
         System.out.println(message);
     }
 
@@ -33,7 +33,7 @@ public class toConsole {
      * Вывод в консоль сообщения об ошибке. Да, это тоже велосипед.
      * @param message Сообщение об ошибке, которое нужно вывести в консоль.
      */
-    public static void print_error(String message) {
+    public static void print_error(Object message) {
         System.err.println(message);
     }
 }
