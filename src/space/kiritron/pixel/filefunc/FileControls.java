@@ -143,7 +143,6 @@ public class FileControls {
      * Переместить файл в другую папку.
      * @param filename Путь до файла.
      * @param destpath Директория, в которую необходимо перенести файл.
-     * @return возвращает результат переноса. TRUE - файл перенесён, FALSE - перенос не удался.
      */
     public static void movingFile(String filename, String destpath) throws IOException {
         File TargetFile = new File(filename);
@@ -167,7 +166,6 @@ public class FileControls {
      * Переименовать файл.
      * @param filename Путь до файла.
      * @param newfilename Новое имя файла.
-     * @return возвращает результат изменения имени файла. TRUE - файл переименован, FALSE - переименовать файл не удалось.
      */
     public static void renameFile(String filename, String newfilename) throws IOException {
         File TargetFile = new File(filename);
