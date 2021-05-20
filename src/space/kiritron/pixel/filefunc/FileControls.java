@@ -29,30 +29,34 @@ public class FileControls {
      * @return возвращает результат поиска. TRUE - файл есть, FALSE - файла нет.
      */
 
-    public static boolean SearchFile(String filename) {
-        File TargetFile = new File(filename);
-        return TargetFile.exists();
+    public static boolean checkFileExists(String filename) {
+        return new File(filename).exists();
     }
 
     /**
      * Удаление файла.
      * @param filename Путь до файла.
-     * @return возвращает результат удаления. TRUE - файл удалён, FALSE - файл удалить не удалось.
      */
-    public static boolean DeleteFile(String filename) {
-        File TargetFile = new File(filename);
-        return TargetFile.delete();
+    public static void DeleteFile(String filename) throws IOException {
+        if (!new File(filename).delete()) {
+            throw new IOException("Файл удалить не получилось.");
+        }
     }
 
     /**
      * Создание файла.
      * @param filename Путь до файла.
-     * @return возвращает результат создания. TRUE - файл создан, FALSE - файл создать не удалось.
-     * @throws IOException Сбой при обработке файла.
      */
-    public static boolean CreateFile(String filename) throws IOException {
+    public static void CreateFile(String filename) throws IOException {
         File TargetFile = new File(filename);
-        return TargetFile.createNewFile();
+
+        if (checkFileExists(filename) && new File(filename).isFile()) {
+            throw new IOException("Файл \"" + TargetFile.getName() + "\" уже существует.");
+        }
+
+        if (!new File(filename).createNewFile()) {
+            throw new IOException("Файл \"" + TargetFile.getName() + "\" создать не получилось.");
+        }
     }
 
     /**
@@ -79,64 +83,60 @@ public class FileControls {
     }
 
     /**
-     * Записать в файл. Обратите внимание, данный метод перезаписывает данные, а не дополняет их.
+     * Записать в файл. Если файла нет, то он будет создан. Обратите внимание, данный метод перезаписывает данные, а не дополняет их.
      * @param filename Путь до файла.
      * @param data Данные, которые нужно записать в файл.
-     * @return возвращает результат записи. TRUE - данные записаны в файл, FALSE - данные в файл записать не удалось.
      */
-    public static boolean writeToFile(String filename, String data) {
-        boolean Status = false;
+    public static void writeToFile(String filename, String data) throws IOException {
         File TargetFile = new File(filename);
-        FileWriter fr = null;
-        try {
-            fr = new FileWriter(TargetFile);
+
+        if (!(checkFileExists(filename) && TargetFile.isFile())) {
+            CreateFile(filename);
+        }
+
+        try (FileWriter fr = new FileWriter(TargetFile)) {
             fr.write(data);
         } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                assert fr != null;
-                fr.close();
-                Status = true;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            throw new IOException(e);
         }
-        return Status;
+    }
+
+    /**
+     * Записать байт-массив в файл. Если файла нет, то он будет создан. Обратите внимание, данный метод перезаписывает данные, а не дополняет их.
+     * @param filename Путь до файла.
+     * @param byte_array Байт-массив, который нужно записать в файл.
+     */
+    public static void ByteArrayToFile(String filename, byte[] byte_array) throws IOException {
+        if (!(checkFileExists(filename) && new File(filename).isFile())) {
+            CreateFile(filename);
+        }
+
+        try (FileOutputStream fos = new FileOutputStream(filename)) {
+            fos.write(byte_array);
+        } catch (IOException e) {
+            throw new IOException(e);
+        }
     }
 
     /**
      * Добавить данные в файл. Работает как и writeToFile, но дополняет данные, а не перезаписывает.
      * @param filename Путь до файла.
      * @param data Данные, которые нужно записать в файл.
-     * @return возвращает результат перезаписи. TRUE - данные перезаписаны в файл, FALSE - данные в файл записать не удалось.
      */
-    public static boolean addDataToFile(String filename, String data) {
-        boolean Status = false;
-        String SecondData;
+    public static void addDataToFile(String filename, String data) throws IOException {
+        String CACHE;
+
         try {
-            SecondData = ReadFile(filename) + data;
+            CACHE = ReadFile(filename) + data;
         } catch (IOException ee) {
-            return Status;
+            throw new IOException(ee);
         }
 
-        File TargetFile = new File(filename);
-        FileWriter fr = null;
-        try {
-            fr = new FileWriter(TargetFile);
-            fr.write(SecondData);
+        try (FileWriter fr = new FileWriter(new File(filename))) {
+            fr.write(CACHE);
         } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                assert fr != null;
-                fr.close();
-                Status = true;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            throw new IOException(e);
         }
-        return Status;
     }
 
     /**
@@ -145,16 +145,22 @@ public class FileControls {
      * @param destpath Директория, в которую необходимо перенести файл.
      * @return возвращает результат переноса. TRUE - файл перенесён, FALSE - перенос не удался.
      */
-    public static boolean movingFile(String filename, String destpath) {
-        File file = new File(filename);
+    public static void movingFile(String filename, String destpath) throws IOException {
+        File TargetFile = new File(filename);
 
-        if (!destpath.substring(destpath.length() - 1).contains(GetPathOfAPP.GetSep())) {
-            destpath = destpath + GetPathOfAPP.GetSep();
+        if (checkFileExists(filename)) {
+            if (!destpath.substring(destpath.length() - 1).contains(GetPathOfAPP.GetSep())) {
+                destpath = destpath + GetPathOfAPP.GetSep();
+            }
+
+            File destFolder = new File(destpath + TargetFile.getName());
+
+            if (!TargetFile.renameTo(destFolder)) {
+                throw new IOException("Перенести файл \"" + TargetFile.getName() + "\" не удалось.");
+            }
+        } else {
+            throw new IOException("Файл \"" + TargetFile.getName() + "\" не найден.");
         }
-
-        File destFolder = new File(destpath + file.getName());
-
-        return file.renameTo(destFolder);
     }
 
     /**
@@ -163,49 +169,64 @@ public class FileControls {
      * @param newfilename Новое имя файла.
      * @return возвращает результат изменения имени файла. TRUE - файл переименован, FALSE - переименовать файл не удалось.
      */
-    public static boolean renameFile(String filename, String newfilename) {
-        File file = new File(filename);
-        File destFolder = new File(filename.replace(file.getName(), "") + newfilename);
+    public static void renameFile(String filename, String newfilename) throws IOException {
+        File TargetFile = new File(filename);
 
-        return file.renameTo(destFolder);
+        if (checkFileExists(filename)) {
+            File destFolder = new File(filename.replace(TargetFile.getName(), "") + newfilename);
+
+            if (!TargetFile.renameTo(destFolder)) {
+                throw new IOException("Переименовать файл \"" + TargetFile.getName() + "\" не удалось.");
+            }
+        } else {
+            throw new IOException("Файл \"" + TargetFile.getName() + "\" не найден.");
+        }
     }
 
     /**
      * Скопировать файл.
      * @param in_filename Путь до файла, который необходимо скопировать.
      * @param out_dir Путь, в который файл необходимо скопировать.
-     * @return возвращает результат копирования. TRUE - файл скопирован, FALSE - копирование не удалось.
      */
-    public static boolean copyFile(String in_filename, String out_dir) {
+    public static void copyFile(String in_filename, String out_dir) throws IOException {
         File in_f = new File(in_filename);
 
-        if (!out_dir.substring(out_dir.length() - 1).contains(GetPathOfAPP.GetSep())) {
-            out_dir = out_dir + GetPathOfAPP.GetSep();
-        }
+        if (checkFileExists(in_filename)) {
+            if (!checkFileExists(out_dir + in_f.getName())) {
+                if (!out_dir.substring(out_dir.length() - 1).contains(GetPathOfAPP.GetSep())) {
+                    out_dir = out_dir + GetPathOfAPP.GetSep();
+                }
 
-        File out_f = new File(out_dir + in_f.getName());
+                File out_f = new File(out_dir + in_f.getName());
 
-        InputStream is = null;
-        OutputStream os = null;
+                InputStream is = null;
+                OutputStream os = null;
 
-        try {
-            is = new FileInputStream(in_f);
-            os = new FileOutputStream(out_f);
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = is.read(buffer)) > 0) { os.write(buffer, 0, length); }
-            return true;
-        } catch (IOException EeE) {
-            return false;
-        } finally {
-            try {
-                assert is != null;
-                is.close();
-                assert os != null;
-                os.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+                try {
+                    is = new FileInputStream(in_f);
+                    os = new FileOutputStream(out_f);
+                    byte[] buffer = new byte[1024];
+                    int length;
+                    while ((length = is.read(buffer)) > 0) {
+                        os.write(buffer, 0, length);
+                    }
+                } catch (IOException EeE) {
+                    throw new IOException(EeE);
+                } finally {
+                    try {
+                        assert is != null;
+                        is.close();
+                        assert os != null;
+                        os.close();
+                    } catch (IOException e) {
+                        throw new IOException(e);
+                    }
+                }
+            } else {
+                throw new IOException("В директории, куда надо скопировать файл \"" + in_f.getName() + "\", уже есть файл с таким названием.");
             }
+        } else {
+            throw new IOException("Файл \"" + in_f.getName() + "\" не найден.");
         }
     }
 }

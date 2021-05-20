@@ -17,6 +17,7 @@
 package space.kiritron.pixel.filefunc;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * @author Киритрон Стэйблкор
@@ -28,50 +29,66 @@ public class DirControls {
      * @param dirname Путь до каталога.
      * @return возвращает результат поиска. TRUE - каталог есть, FALSE - каталога нет.
      */
-    public static boolean SearchDir(String dirname) {
-        File TargetDir = new File(dirname);
-        return TargetDir.exists();
+    public static boolean checkDirExists(String dirname) {
+        return new File(dirname).exists(); // Да, ничем не отличается от аналога с файлами, но так всё равно удобнее
     }
 
     /**
      * Создать каталог.
      * @param dirname Путь до каталога.
-     * @return возвращает результат создания. TRUE - каталог создан, FALSE - что-то пошло не так при создании каталога.
      */
-    public static boolean CreateDir(String dirname) {
+    public static void CreateDir(String dirname) throws IOException {
         File TargetDir = new File(dirname);
-        return TargetDir.mkdir();
+
+        if (checkDirExists(dirname) && new File(dirname).isDirectory()) {
+            throw new IOException("Каталог \"" + TargetDir.getName() + "\" уже существует.");
+        }
+
+        if (!new File(dirname).mkdir()) {
+            throw new IOException("Каталог \"" + TargetDir.getName() + "\" создать не удалось.");
+        }
     }
 
     /**
      * Удаление каталога.
      * @param dirname Путь до каталога.
-     * @return возвращает результат удаления. TRUE - каталог удалён, FALSE - каталог не удалось удалить.
      */
-    public static boolean DeleteDir(String dirname) {
+    public static void DeleteDir(String dirname) throws IOException {
         File TargetDir = new File(dirname);
-        return TargetDir.delete();
+
+        if (!TargetDir.delete()) {
+            throw new IOException("Каталог \"" + TargetDir.getName() + "\" удалить не получилось.");
+        }
     }
 
     /**
-     * Принудительное удаление. Удаляет каталог со всем, что есть внутри. (Экспериментально)
+     * Принудительное удаление. Удаляет каталог со всем, что есть внутри.
      * @param dirname Путь до каталога.
-     * @return возвращает результат удаления. TRUE - каталог удалён, FALSE - каталог не удалось удалить.
      */
-    public static boolean ForceDeleteDir(String dirname) {
+    public static void ForceDeleteDir(String dirname) throws IOException {
         File TargetDir = new File(dirname);
-
         File[] files = TargetDir.listFiles();
+
+        // Сканируем всё, что внутри каталога и удаляем
         if (files!=null) {
             for (File f: files) {
                 if (f.isDirectory()) {
-                    ForceDeleteDir(String.valueOf(f));
+                    try {
+                        ForceDeleteDir(String.valueOf(f));
+                    } catch (IOException e) {
+                        throw new IOException(e);
+                    }
                 } else {
-                    f.delete();
+                    if (!f.delete()) {
+                        throw new IOException("Не удалось удалить файл \"" + f.getName() + "\" при принудительном удалении каталога.");
+                    }
                 }
             }
         }
 
-        return TargetDir.delete();
+        // ...затем удаляем сам каталог.
+        if (!TargetDir.delete()) {
+            throw new IOException("Каталог \"" + TargetDir.getName() + "\" не получилось принудительно удалить.");
+        }
     }
 }

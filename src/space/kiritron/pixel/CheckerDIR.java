@@ -17,21 +17,32 @@
 package space.kiritron.pixel;
 
 import space.kiritron.pixel.filefunc.GetPathOfAPP;
+
+import java.io.IOException;
+
 import static space.kiritron.pixel.filefunc.DirControls.CreateDir;
-import static space.kiritron.pixel.filefunc.DirControls.SearchDir;
+import static space.kiritron.pixel.filefunc.DirControls.checkDirExists;
 
 /**
  * @author Киритрон Стэйблкор
  */
 
 public class CheckerDIR {
+    // Данный содержит методы, которые были созданы для классов инициализации в приложениях на ЯП Java.
+    // Эти методы всего одной строкой быстро и элегантно позволяют инициализировать каталоги, которые
+    // необходимы для работы приложения.
+
     /**
      * Поиск каталога в директории, где запущено данное ПО. Если каталога нет, то он будет создан.
-     * @param dir Путь до каталога.
+     * @param dir Путь до каталога относительно корневого каталога, где запущено данное приложение.
      */
     public static void Check(String dir) {
-        if (!SearchDir(GetPathOfAPP.GetPathWithSep() + dir)) {
-            CreateDir(GetPathOfAPP.GetPathWithSep() + dir);
+        if (!checkDirExists(GetPathOfAPP.GetPathWithSep() + dir)) {
+            try {
+                CreateDir(GetPathOfAPP.GetPathWithSep() + dir);
+            } catch (IOException e) {
+                // Ничего. Данный метод не предусматривает какой либо вывод.
+            }
         }
     }
 
@@ -40,8 +51,12 @@ public class CheckerDIR {
      * @param path Путь до каталога.
      */
     public static void CheckOut(String path) {
-        if (!SearchDir(path)) {
-            CreateDir(path);
+        if (!checkDirExists(path)) {
+            try {
+                CreateDir(path);
+            } catch (IOException e) {
+                // Ничего. Данный метод не предусматривает какой либо вывод.
+            }
         }
     }
 }
