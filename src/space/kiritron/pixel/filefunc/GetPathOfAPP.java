@@ -16,7 +16,7 @@
 
 package space.kiritron.pixel.filefunc;
 
-import space.kiritron.pixel.GetOS;
+import space.kiritron.pixel.OS;
 
 /**
  * @author Киритрон Стэйблкор
@@ -47,23 +47,16 @@ public class GetPathOfAPP {
 
     /**
      * Получить слеш, который характерен для ОС, на которой запущено данное ПО. Поддерживаются только Linux и Windows, а ещё экспирементально Mac OS.
-     * @return возвращает слеш, но в случае, если систему не удалось опознать - NULL.
+     * @return возвращает слеш, но в случае, если систему не удалось опознать, то будет исключение "ОС не поддерживается".
      */
     public static String GetSep() {
-        String Sep = null;
-
-        if (GetOS.isLinux()) {
-            Sep = "/";
+        if (OS.isLinux() || OS.isMacintosh()) {
+            return "/";
+        } else if (OS.isWindows()) {
+            return "\\";
+        } else {
+            // Если без RuntimeException, то появляется необходимость обрабатывать исключения GetSep, что на самом деле уже бредово и очень сильно мешает
+            throw new RuntimeException(new Exception("ОС не поддерживается"));
         }
-
-        if (GetOS.isMacintosh()) {
-            Sep = "/";
-        }
-
-        if (GetOS.isWindows()) {
-            Sep = "\\";
-        }
-
-        return Sep;
     }
 }
