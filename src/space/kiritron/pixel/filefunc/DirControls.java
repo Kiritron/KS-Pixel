@@ -34,6 +34,15 @@ public class DirControls {
     }
 
     /**
+     * Узнать каталог ли это.
+     * @param dirname Путь до каталога.
+     * @return возвращает результат проверки. TRUE - это каталог, FALSE - это файл или что-то иное(что?).
+     */
+    public static boolean isDir(String dirname) {
+        return new File(dirname).isDirectory();
+    }
+
+    /**
      * Создать каталог.
      * @param dirname Путь до каталога.
      */

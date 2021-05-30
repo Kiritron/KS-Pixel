@@ -28,9 +28,17 @@ public class FileControls {
      * @param filename Путь до файла.
      * @return возвращает результат поиска. TRUE - файл есть, FALSE - файла нет.
      */
-
     public static boolean checkFileExists(String filename) {
         return new File(filename).exists();
+    }
+
+    /**
+     * Узнать файл ли это.
+     * @param filename Путь до файла.
+     * @return возвращает результат проверки. TRUE - это файл, FALSE - это каталог или что-то иное(что?).
+     */
+    public static boolean isFile(String filename) {
+        return new File(filename).isFile();
     }
 
     /**

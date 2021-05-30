@@ -18,6 +18,8 @@ package space.kiritron.pixel.filefunc;
 
 import space.kiritron.pixel.OS;
 
+import java.io.File;
+
 /**
  * @author Киритрон Стэйблкор
  */
@@ -50,13 +52,6 @@ public class GetPathOfAPP {
      * @return возвращает слеш, но в случае, если систему не удалось опознать, то будет исключение "ОС не поддерживается".
      */
     public static String GetSep() {
-        if (OS.isLinux() || OS.isMacintosh()) {
-            return "/";
-        } else if (OS.isWindows()) {
-            return "\\";
-        } else {
-            // Если без RuntimeException, то появляется необходимость обрабатывать исключения GetSep, что на самом деле уже бредово и очень сильно мешает
-            throw new RuntimeException(new Exception("ОС не поддерживается"));
-        }
+        return File.separator;
     }
 }
