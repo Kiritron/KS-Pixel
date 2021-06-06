@@ -28,7 +28,7 @@ import java.io.IOException;
  */
 
 public class toFile {
-    private static boolean LogFileWriter(String prefixLogFile, String log_messageFile) {
+    private static void LogFileWriter(String prefixLogFile, String log_messageFile) throws IOException {
         File logFile;
         if (prefixLogFile.equals("")) {
             logFile = new File(GetPathOfAPP.GetPathWithSep() + "logs" + GetPathOfAPP.GetSep() + GDate.GetDate + ".log");
@@ -36,31 +36,37 @@ public class toFile {
             logFile = new File(GetPathOfAPP.GetPathWithSep() + "logs" + GetPathOfAPP.GetSep() + prefixLogFile + "-" + GDate.GetDate + ".log");
         }
 
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true));
-            String lineSeparator = System.getProperty("line.separator");
-            writer.write(log_messageFile + lineSeparator);
-            writer.flush();
-            writer.close();
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
+        BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true));
+        String lineSeparator = System.getProperty("line.separator");
+        writer.write(log_messageFile + lineSeparator);
+        writer.flush();
+        writer.close();
     }
 
     /**
-     * Запись лог файла.
-     * @param log_message Сообщение, которое нужно записать в лог файл.
+     * Запись лог файла с префиксом в названии файла.
      * @param prefixLogFile Префикс лог файла.
+     * @param log_message Сообщение, которое нужно записать в лог файл.
      * @return результат выполнения. Если равно TRUE, то всё в порядке, а если FALSE, то что-то пошло не так.
      */
-    public static boolean WriteLog(String log_message, String prefixLogFile) { return LogFileWriter(prefixLogFile, log_message); }
+    public static void WriteLogWithPrefix(String prefixLogFile, String log_message) {
+        try {
+            LogFileWriter(prefixLogFile, log_message);
+        } catch (IOException e) {
+            throw new RuntimeException(new IOException("Не удалось создать лог файл c префиксом " + prefixLogFile + ". Ошибка: " + e.getMessage()));
+        }
+    }
 
     /**
      * Запись лог файла, но уже без префикса в названии лог файла.
      * @param log_message Сообщение, которое нужно записать в лог файл.
      * @return результат выполнения. Если равно TRUE, то всё в порядке, а если FALSE, то что-то пошло не так.
      */
-    public static boolean WriteLogNoPrefix(String log_message) { return LogFileWriter("", log_message); }
+    public static void WriteLogNoPrefix(String log_message) {
+        try {
+            LogFileWriter("", log_message);
+        } catch (IOException e) {
+            throw new RuntimeException(new IOException("Не удалось создать лог файл без префикса. Ошибка: " + e.getMessage()));
+        }
+    }
 }

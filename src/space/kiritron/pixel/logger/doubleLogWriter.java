@@ -20,11 +20,16 @@
 
 package space.kiritron.pixel.logger;
 
+import static space.kiritron.pixel.logger.toFile.WriteLogWithPrefix;
 import static space.kiritron.pixel.logger.toFile.WriteLogNoPrefix;
+
+/**
+ * @author Киритрон Стэйблкор
+ */
 
 public class doubleLogWriter {
     /**
-     * Вывод и в консоль, и в лог файл. Сообщения будут без указания даты, но к дате будут привязаны лог-файлы. Цветовые коды добавляются только при выводе в консоль, а лог-файле цветовых кодов не будет.
+     * Вывод и в консоль, и в лог файл без префикса в названии. Цветовые коды добавляются только при выводе в консоль, а лог-файле цветовых кодов не будет.
      * @param type Тип сообщения. 0(или любое другое свободное число, но рекомендуется 0) - без типа, 1 - Информация, 2 - Предупреждение, 3 - Ошибка. Если без типа,
      *             то type_style и type_color перестают на что-либо влиять и вы можете установить их как 0, хотя необязательно и является
      *             лишь рекомендацией.
@@ -38,5 +43,23 @@ public class doubleLogWriter {
         toConsole.print(log_message);
         log_message = genLogMessage.gen(type, type_style, false, false, message);
         WriteLogNoPrefix(log_message);
+    }
+
+    /**
+     * Вывод и в консоль, и в лог файл с префиксом в названии. Цветовые коды добавляются только при выводе в консоль, а лог-файле цветовых кодов не будет.
+     * @param type Тип сообщения. 0(или любое другое свободное число, но рекомендуется 0) - без типа, 1 - Информация, 2 - Предупреждение, 3 - Ошибка. Если без типа,
+     *             то type_style и type_color перестают на что-либо влиять и вы можете установить их как 0, хотя необязательно и является
+     *             лишь рекомендацией.
+     * @param type_style Стиль типа. 1(или любое другое свободное число) - стандарт(Прим. "ИНФО"), 2 - сокращённый(Прим. "И"), 3 - символический(Прим. "i").
+     * @param type_color true - к типу сообщения добавляется цветовой код, false - к типу сообщения цветовой код добавлен не будет
+     * @param prefix Префикс лог-файла.
+     * @param message Сообщение, которое нужно вывести в консоль.
+     */
+    public static void writeWithPrefix(int type, int type_style, boolean type_color, String prefix, String message) {
+        String log_message;
+        log_message = genLogMessage.gen(type, type_style, type_color, false, message);
+        toConsole.print(log_message);
+        log_message = genLogMessage.gen(type, type_style, false, false, message);
+        WriteLogWithPrefix(prefix, log_message);
     }
 }
