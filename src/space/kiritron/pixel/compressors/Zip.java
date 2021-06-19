@@ -64,7 +64,7 @@ public class Zip {
      * @param zipFileName Адрес архива.
      * @param dirName Адрес директории, в которую будет распаковано содержимое архива.
      */
-    public void unzipFile(String zipFileName, String dirName) throws IOException {
+    public static void unzipFile(String zipFileName, String dirName) throws IOException {
         try (ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFileName))) {
             ZipEntry zipEntry = zis.getNextEntry();
 

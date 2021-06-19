@@ -28,20 +28,25 @@ import java.nio.channels.ReadableByteChannel;
  */
 
 public class FileDownloads {
+    /**
+     * @deprecated Так как к downloadFromURL документация немного изменена, то эта переменная уже не нужна.
+     */
     public static boolean NIO = true;
+    /**
+     * @deprecated Так как к downloadFromURL документация немного изменена, то эта переменная уже не нужна.
+     */
     public static boolean InputStream = false;
-
 
     /**
      * Скачивание файла по URL и его сохранение по указанному пути
      * @param URL URL адрес файла
      * @param filepath Адрес ФАЙЛА, в который будет записан скачиваемый файл. Если по этому адресу файла нет, он будет создан.
-     * @param method Метод загрузки. Доступны NIO и InputStream. Можете использовать готовые переменные
-     *               FileDownloads.NIO и FileDownloads.InputStream или true и false соответственно.
+     * @param useNIO Метод загрузки и записи на диск. Доступны NIO и InputStream. Введите TRUE, если хотите использовать метод NIO.
+     *               Введите FALSE, если хотите использовать InputStream.
      * @throws IOException Сбой в обработке информации. Может произойти даже на этапе загрузки и на этапе сохранения.
      */
-    public static void downloadFromURL(String URL, String filepath, boolean method) throws IOException {
-        if (method) {
+    public static void downloadFromURL(String URL, String filepath, boolean useNIO) throws IOException {
+        if (useNIO) {
             URL_downloadUsingNIO(new URL(URL), filepath);
         } else {
             URL_downloadUsingStream(new URL(URL), filepath);
