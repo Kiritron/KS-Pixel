@@ -70,7 +70,16 @@ public class Zip {
 
             while (zipEntry != null) {
                 boolean isDirectory = false;
+
+                // Киритрон: ...вот об этом фрагменте речь
                 if (zipEntry.getName().endsWith(GetPathOfAPP.GetSep())) {
+                    isDirectory = true;
+                }
+
+                // Киритрон: Фрагмент выше от Mkyong, как мне показалось, работает недостаточно хорошо, если вообще работает.
+                // Проблема была в том, что он плохо определял, с каталогом имеется дело или нет, из-за чего
+                // распаковка архивов с каталогами внутри была проблематичной.
+                if (zipEntry.isDirectory()) {
                     isDirectory = true;
                 }
 
