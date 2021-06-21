@@ -24,19 +24,10 @@ import java.util.GregorianCalendar;
  */
 
 public class GDate {
-    static Calendar calendar = new GregorianCalendar();
-
-    static int CurDay = calendar.get(Calendar.DAY_OF_MONTH);
-    static int CurMonth = calendar.get(Calendar.MONTH) + 1;
-    static int CurYear = calendar.get(Calendar.YEAR);
-
-    static int CurHour = calendar.get(Calendar.HOUR_OF_DAY);
-    static int CurMinutes = calendar.get(Calendar.MINUTE);
-    static int CurSeconds = calendar.get(Calendar.SECOND);
 
     private static String CurDaySTR() {
-        String A = Integer.toString(CurDay);
-        int B = CurDay;
+        String A = Integer.toString(new GregorianCalendar().get(Calendar.DAY_OF_MONTH));
+        int B = new GregorianCalendar().get(Calendar.DAY_OF_MONTH);
 
         if (B == 1) {
             A = "01";
@@ -78,8 +69,8 @@ public class GDate {
     }
 
     private static String CurHourSTR() {
-        String A = Integer.toString(CurHour);
-        int B = CurHour;
+        String A = Integer.toString(new GregorianCalendar().get(Calendar.HOUR_OF_DAY));
+        int B = new GregorianCalendar().get(Calendar.HOUR_OF_DAY);
 
         if (B == 0) {
             A = "00";
@@ -125,8 +116,8 @@ public class GDate {
     }
 
     private static String CurMinutesSTR() {
-        String A = Integer.toString(CurMinutes);
-        int B = CurMinutes;
+        String A = Integer.toString(new GregorianCalendar().get(Calendar.MINUTE));
+        int B = new GregorianCalendar().get(Calendar.MINUTE);
 
         if (B == 0) {
             A = "00";
@@ -172,8 +163,8 @@ public class GDate {
     }
 
     private static String CurSecondsSTR() {
-        String A = Integer.toString(CurSeconds);
-        int B = CurSeconds;
+        String A = Integer.toString(new GregorianCalendar().get(Calendar.SECOND));
+        int B = new GregorianCalendar().get(Calendar.SECOND);
 
         if (B == 0) {
             A = "00";
@@ -219,8 +210,8 @@ public class GDate {
     }
 
     private static String CurMonthSTR() {
-        String A = Integer.toString(CurMonth);
-        int B = CurMonth;
+        String A = Integer.toString(new GregorianCalendar().get(Calendar.MONTH) + 1);
+        int B = new GregorianCalendar().get(Calendar.MONTH) + 1;
 
         if (B == 1) {
             A = "01";
@@ -261,11 +252,23 @@ public class GDate {
         return A;
     }
 
-    public static String GetCurDateAndTimeWithSeconds = CurDaySTR() + "." + CurMonthSTR() + "." + CurYear + " " + CurHourSTR() + ":" + CurMinutesSTR() + ":" + CurSecondsSTR();
-    public static String GetCurDateAndTime = CurDaySTR() + "." + CurMonthSTR() + "." + CurYear + " " + CurHourSTR() + ":" + CurMinutesSTR();
-    public static String GetDate = CurDaySTR() + "-" + CurMonthSTR() + "-" + CurYear;
-    public static String GetTime = CurHourSTR() + ":" + CurMinutesSTR();
-    public static String GetTimeWithSeconds = CurHourSTR() + ":" + CurMinutesSTR() + ":" + CurSecondsSTR();
-    public static String GetDateNoDay = CurMonthSTR() + "-" + CurYear;
+    public static String GetCurDateAndTimeWithSeconds() {
+        return CurDaySTR() + "." + CurMonthSTR() + "." + new GregorianCalendar().get(Calendar.YEAR) + " " + CurHourSTR() + ":" + CurMinutesSTR() + ":" + CurSecondsSTR();
+    }
+    public static String GetCurDateAndTime() {
+        return CurDaySTR() + "." + CurMonthSTR() + "." + new GregorianCalendar().get(Calendar.YEAR) + " " + CurHourSTR() + ":" + CurMinutesSTR();
+    }
+    public static String GetDate() {
+        return CurDaySTR() + "-" + CurMonthSTR() + "-" + new GregorianCalendar().get(Calendar.YEAR);
+    }
+    public static String GetTime() {
+        return CurHourSTR() + ":" + CurMinutesSTR();
+    }
+    public static String GetTimeWithSeconds() {
+        return CurHourSTR() + ":" + CurMinutesSTR() + ":" + CurSecondsSTR();
+    }
+    public static String GetDateNoDay() {
+        return CurMonthSTR() + "-" + new GregorianCalendar().get(Calendar.YEAR);
+    }
 }
 

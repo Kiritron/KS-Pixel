@@ -31,9 +31,9 @@ public class toFile {
     private static void LogFileWriter(String prefixLogFile, String log_messageFile) throws IOException {
         File logFile;
         if (prefixLogFile.equals("")) {
-            logFile = new File(GetPathOfAPP.GetPathWithSep() + "logs" + GetPathOfAPP.GetSep() + GDate.GetDate + ".log");
+            logFile = new File(GetPathOfAPP.GetPathWithSep() + "logs" + GetPathOfAPP.GetSep() + GDate.GetDate() + ".log");
         } else {
-            logFile = new File(GetPathOfAPP.GetPathWithSep() + "logs" + GetPathOfAPP.GetSep() + prefixLogFile + "-" + GDate.GetDate + ".log");
+            logFile = new File(GetPathOfAPP.GetPathWithSep() + "logs" + GetPathOfAPP.GetSep() + prefixLogFile + "-" + GDate.GetDate() + ".log");
         }
 
         BufferedWriter writer = new BufferedWriter(new FileWriter(logFile, true));

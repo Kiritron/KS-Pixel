@@ -45,9 +45,9 @@ public class genLogMessage {
         String TYPE = null; // (:<)
 
         if (timeWithDate) {
-            TimeString = GDate.GetTimeWithSeconds;
+            TimeString = GDate.GetTimeWithSeconds();
         } else {
-            TimeString = GDate.GetCurDateAndTimeWithSeconds;
+            TimeString = GDate.GetCurDateAndTimeWithSeconds();
         }
 
         if (type != 0) {
