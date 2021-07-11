@@ -65,6 +65,22 @@ public class OS {
     }
 
     /**
+     * Узнать, в какой стране находится пользователь(исходя из настроек). Примеры ответа: RU, US.
+     * @return возвращает код страны, в которой находится пользователь(исходя из настроек).
+     */
+    public static String getCountry() {
+        return System.getProperty("user.country");
+    }
+
+    /**
+     * Узнать, какой язык установлен в системе. Примеры ответа: ru, en.
+     * @return возвращает код языка, который установлен в системе.
+     */
+    public static String getLanguage() {
+        return System.getProperty("user.language");
+    }
+
+    /**
      * Узнать на Windows ли сейчас работает данная программа.
      * @return возвращает boolean значение.
      */

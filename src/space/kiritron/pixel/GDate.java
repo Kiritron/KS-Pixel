@@ -252,21 +252,50 @@ public class GDate {
         return A;
     }
 
+    /**
+     * Получить текущие дату и время(по системе) с секундами.
+     * @return возвращает дату и время в формате "ДД.ММ.ГГГГ ЧЧ:ММ:СС".
+     */
     public static String GetCurDateAndTimeWithSeconds() {
         return CurDaySTR() + "." + CurMonthSTR() + "." + new GregorianCalendar().get(Calendar.YEAR) + " " + CurHourSTR() + ":" + CurMinutesSTR() + ":" + CurSecondsSTR();
     }
+
+    /**
+     * Получить текущие дату и время(по системе), но без секунд.
+     * @return возвращает дату и время в формате "ДД.ММ.ГГГГ ЧЧ:ММ".
+     */
     public static String GetCurDateAndTime() {
         return CurDaySTR() + "." + CurMonthSTR() + "." + new GregorianCalendar().get(Calendar.YEAR) + " " + CurHourSTR() + ":" + CurMinutesSTR();
     }
+
+    /**
+     * Получить текущую дату(по системе).
+     * @return возвращает дату в формате "ДД-ММ-ГГГГ".
+     */
     public static String GetDate() {
         return CurDaySTR() + "-" + CurMonthSTR() + "-" + new GregorianCalendar().get(Calendar.YEAR);
     }
+
+    /**
+     * Получить текущее время(по системе).
+     * @return возвращает время в формате "ЧЧ:ММ".
+     */
     public static String GetTime() {
         return CurHourSTR() + ":" + CurMinutesSTR();
     }
+
+    /**
+     * Получить текущее время(по системе) с секундами.
+     * @return возвращает время в формате "ЧЧ:ММ:СС".
+     */
     public static String GetTimeWithSeconds() {
         return CurHourSTR() + ":" + CurMinutesSTR() + ":" + CurSecondsSTR();
     }
+
+    /**
+     * Получить текущую дату(по системе), но без дней.
+     * @return возвращает дату в формате "ММ-ГГГГ".
+     */
     public static String GetDateNoDay() {
         return CurMonthSTR() + "-" + new GregorianCalendar().get(Calendar.YEAR);
     }
