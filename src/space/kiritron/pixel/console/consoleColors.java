@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package space.kiritron.pixel.logger;
+package space.kiritron.pixel.console;
 
 /**
  * @author Киритрон Стэйблкор

@@ -29,7 +29,7 @@ public class Base64 {
      * @param message Сообщение, которое нужно кодировать в Base64.
      * @return закодированный в Base64 текст.
      */
-    public static String encrypt(String message) {
+    public static String encode(String message) {
         return java.util.Base64.getEncoder().encodeToString(message.getBytes(UTF_8));
     }
 
@@ -38,7 +38,7 @@ public class Base64 {
      * @param message Сообщение, которое нужно декодировать от алгоритма Base64.
      * @return декодированный от Base64 текст.
      */
-    public static String decrypt(String message) throws IllegalArgumentException {
+    public static String decode(String message) throws IllegalArgumentException {
         return new String(java.util.Base64.getDecoder().decode(message));
     }
 }

@@ -20,8 +20,10 @@
 
 package space.kiritron.pixel.logger;
 
-import static space.kiritron.pixel.logger.toFile.WriteLogWithPrefix;
-import static space.kiritron.pixel.logger.toFile.WriteLogNoPrefix;
+import space.kiritron.pixel.console.toConsole;
+
+import static space.kiritron.pixel.logger.logToFile.WriteLogWithPrefix;
+import static space.kiritron.pixel.logger.logToFile.WriteLogNoPrefix;
 
 /**
  * @author Киритрон Стэйблкор
@@ -40,7 +42,7 @@ public class doubleLogWriter {
     public static void write(int type, int type_style, boolean type_color, String message) {
         String log_message;
         log_message = genLogMessage.gen(type, type_style, type_color, false, message);
-        toConsole.print(log_message);
+        toConsole.println(log_message);
         log_message = genLogMessage.gen(type, type_style, false, false, message);
         WriteLogNoPrefix(log_message);
     }
@@ -58,7 +60,7 @@ public class doubleLogWriter {
     public static void writeWithPrefix(int type, int type_style, boolean type_color, String prefix, String message) {
         String log_message;
         log_message = genLogMessage.gen(type, type_style, type_color, false, message);
-        toConsole.print(log_message);
+        toConsole.println(log_message);
         log_message = genLogMessage.gen(type, type_style, false, false, message);
         WriteLogWithPrefix(prefix, log_message);
     }

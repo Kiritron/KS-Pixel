@@ -27,7 +27,7 @@ import java.io.IOException;
  * @author Киритрон Стэйблкор
  */
 
-public class toFile {
+public class logToFile {
     private static void LogFileWriter(String prefixLogFile, String log_messageFile) throws IOException {
         File logFile;
         if (prefixLogFile.equals("")) {

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package space.kiritron.pixel.logger;
+package space.kiritron.pixel.console;
 
 /**
  * @author Киритрон Стэйблкор
@@ -22,18 +22,35 @@ package space.kiritron.pixel.logger;
 
 public class toConsole {
     /**
-     * Вывод в консоль. Да, это велосипед.
+     * Вывод в консоль на следующей строке.
      * @param message Сообщение, которое нужно вывести в консоль.
      */
     public static void print(Object message) {
-        System.out.println(message);
+        System.out.print(message);
     }
 
     /**
-     * Вывод в консоль сообщения об ошибке. Да, это тоже велосипед.
+     * Вывод в консоль сообщения об ошибке на следующей строке.
      * @param message Сообщение об ошибке, которое нужно вывести в консоль.
      */
     public static void print_error(Object message) {
+        System.err.print(message);
+    }
+
+    /**
+     * Вывод в консоль на следующей строке.
+     * @param message Сообщение, которое нужно вывести в консоль.
+     */
+    public static void println(Object message) {
+        System.out.println(message);
+    }
+
+
+    /**
+     * Вывод в консоль сообщения об ошибке на следующей строке.
+     * @param message Сообщение об ошибке, которое нужно вывести в консоль.
+     */
+    public static void println_error(Object message) {
         System.err.println(message);
     }
 }

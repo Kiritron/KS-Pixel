@@ -19,7 +19,7 @@ package space.kiritron.pixel.compressors;
 import space.kiritron.pixel.filefunc.DirControls;
 import space.kiritron.pixel.filefunc.FileControls;
 import space.kiritron.pixel.filefunc.GetPathOfAPP;
-import space.kiritron.pixel.logger.toConsole;
+import space.kiritron.pixel.console.toConsole;
 
 import java.io.*;
 import java.nio.file.*;
@@ -156,7 +156,7 @@ public class Zip {
             } else if (!FileControls.isFile(sources[i]) && DirControls.isDir(sources[i])) {
                 scanDirectory(zos, new File(sources[i]));
             } else {
-                toConsole.print_error("Это не файл и не каталог. Непонятно, что с этим делать.");
+                toConsole.println_error("Это не файл и не каталог. Непонятно, что с этим делать.");
                 // throw new IOException("Это не файл и не каталог. Непонятно, что с этим делать.");
             }
 

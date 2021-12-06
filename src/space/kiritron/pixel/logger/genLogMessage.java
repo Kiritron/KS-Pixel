@@ -17,12 +17,7 @@
 package space.kiritron.pixel.logger;
 
 import space.kiritron.pixel.GDate;
-import space.kiritron.pixel.filefunc.GetPathOfAPP;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import space.kiritron.pixel.console.consoleColors;
 
 /**
  * @author Киритрон Стэйблкор
