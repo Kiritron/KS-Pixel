@@ -26,39 +26,45 @@ public class FileControls {
     /**
      * Поиск файла.
      * @param filename Путь до файла.
+     * @throws SecurityException Провоцируется, если например, нет прав.
      * @return возвращает результат поиска. TRUE - файл есть, FALSE - файла нет.
      */
-    public static boolean checkFileExists(String filename) {
+    public static boolean checkFileExists(String filename) throws SecurityException {
         return new File(filename).exists();
     }
 
     /**
      * Узнать файл ли это.
      * @param filename Путь до файла.
+     * @throws SecurityException Провоцируется, если например, нет прав.
      * @return возвращает результат проверки. TRUE - это файл, FALSE - это каталог или что-то иное(что?).
      */
-    public static boolean isFile(String filename) {
+    public static boolean isFile(String filename) throws SecurityException {
         return new File(filename).isFile();
     }
 
     /**
      * Удаление файла.
      * @param filename Путь до файла.
+     * @throws IOException Сбой при обработке файла. Например, может быть, если файл не будет найден.
+     * @throws SecurityException Провоцируется, если например, нет прав.
      */
-    public static void DeleteFile(String filename) throws IOException {
+    public static void DeleteFile(String filename) throws IOException, SecurityException {
         if (!new File(filename).delete()) {
             throw new IOException("Файл удалить не получилось.");
         }
     }
 
     /**
-     * Создание файла.
+     * Создание пустого файла.
      * @param filename Путь до файла.
+     * @throws IOException Помимо очевидных IOException есть ещё и проверка на существование файла, а если таковой имеется, то вылетит IOException. Ещё выполняется проверка на то, создан ли файл, если нет, то будет IOException.
+     * @throws SecurityException Провоцируется, если например, нет прав.
      */
-    public static void CreateFile(String filename) throws IOException {
+    public static void CreateFile(String filename) throws IOException, SecurityException {
         File TargetFile = new File(filename);
 
-        if (checkFileExists(filename) && new File(filename).isFile()) {
+        if (checkFileExists(filename) && TargetFile.isFile()) {
             throw new IOException("Файл \"" + TargetFile.getName() + "\" уже существует.");
         }
 
@@ -68,14 +74,58 @@ public class FileControls {
     }
 
     /**
+     * Создание файла, но необычное, а с возможностью задать кодировку файла при создании. (ЭКСПЕРИМЕНТАЛЬНО)
+     * @param filename Путь до файла.
+     * @param data Данные, которые нужно записать в файл.
+     * @param charset Кодировка.
+     * @throws IOException Помимо очевидных IOException есть ещё и проверка на существование файла, а если таковой имеется, то вылетит IOException.
+     * @throws SecurityException Провоцируется, если например, нет прав.
+     */
+    public static void CreateFile_CustomCharset(String filename, String data, String charset) throws IOException, SecurityException {
+        if (checkFileExists(filename) && new File(filename).isFile()) {
+            throw new IOException("Файл \"" + new File(filename).getName() + "\" уже существует.");
+        }
+
+        BufferedWriter output = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename), charset));
+        output.write(data);
+        output.close();
+    }
+
+    /**
      * Прочитать файл.
      * @param filename Путь до файла.
      * @return возвращает данные, которые удалось вытянуть из файла.
      * @throws IOException Сбой при обработке файла. Например, может быть, если файл не будет найден.
+     * @throws SecurityException Провоцируется, если например, нет прав.
      */
-    public static String ReadFile(String filename) throws IOException {
-        BufferedReader reader = new BufferedReader( new FileReader (filename));
-        String line = null;
+    public static String ReadFile(String filename) throws IOException, SecurityException {
+        BufferedReader reader = new BufferedReader(new FileReader (filename));
+        String line;
+        StringBuilder stringBuilder = new StringBuilder();
+        String ls = System.getProperty("line.separator");
+        while( ( line = reader.readLine() ) != null ) {
+            stringBuilder.append( line );
+            stringBuilder.append( ls );
+        }
+
+        if (stringBuilder.length() != 0) {
+            stringBuilder.deleteCharAt(stringBuilder.length()-1);
+        }
+
+        return stringBuilder.toString();
+    }
+
+    /**
+     * Прочитать файл, но в определённой кодировке. (ЭКСПЕРИМЕНТАЛЬНО)
+     * @param filename Путь до файла.
+     * @param charset Кодировка.
+     * @return возвращает данные, которые удалось вытянуть из файла.
+     * @throws IOException Сбой при обработке файла. Например, может быть, если файл не будет найден.
+     * @throws SecurityException Провоцируется, если например, нет прав.
+     */
+    public static String ReadFile_CustomCharset(String filename, String charset) throws IOException, SecurityException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(filename), charset));
+        String line;
         StringBuilder stringBuilder = new StringBuilder();
         String ls = System.getProperty("line.separator");
         while( ( line = reader.readLine() ) != null ) {
@@ -94,8 +144,10 @@ public class FileControls {
      * Записать в файл. Если файла нет, то он будет создан. Обратите внимание, данный метод перезаписывает данные, а не дополняет их.
      * @param filename Путь до файла.
      * @param data Данные, которые нужно записать в файл.
+     * @throws IOException Сбой при обработке файла. Например, может быть, если файл не будет найден.
+     * @throws SecurityException Провоцируется, если например, нет прав.
      */
-    public static void writeToFile(String filename, String data) throws IOException {
+    public static void writeToFile(String filename, String data) throws IOException, SecurityException {
         File TargetFile = new File(filename);
 
         if (!(checkFileExists(filename) && TargetFile.isFile())) {
@@ -113,8 +165,10 @@ public class FileControls {
      * Записать байт-массив в файл. Если файла нет, то он будет создан. Обратите внимание, данный метод перезаписывает данные, а не дополняет их.
      * @param filename Путь до файла.
      * @param byte_array Байт-массив, который нужно записать в файл.
+     * @throws IOException Сбой при обработке файла. Например, может быть, если файл не будет найден.
+     * @throws SecurityException Провоцируется, если например, нет прав.
      */
-    public static void ByteArrayToFile(String filename, byte[] byte_array) throws IOException {
+    public static void ByteArrayToFile(String filename, byte[] byte_array) throws IOException, SecurityException {
         if (!(checkFileExists(filename) && new File(filename).isFile())) {
             CreateFile(filename);
         }
@@ -130,8 +184,10 @@ public class FileControls {
      * Добавить данные в файл. Работает как и writeToFile, но дополняет данные, а не перезаписывает.
      * @param filename Путь до файла.
      * @param data Данные, которые нужно записать в файл.
+     * @throws IOException Сбой при обработке файла. Например, может быть, если файл не будет найден.
+     * @throws SecurityException Провоцируется, если например, нет прав.
      */
-    public static void addDataToFile(String filename, String data) throws IOException {
+    public static void addDataToFile(String filename, String data) throws IOException, SecurityException {
         String CACHE;
 
         try {
@@ -151,8 +207,10 @@ public class FileControls {
      * Переместить файл в другую папку.
      * @param filename Путь до файла.
      * @param destpath Директория, в которую необходимо перенести файл.
+     * @throws IOException Сбой при обработке файла. Например, может быть, если файл не будет найден.
+     * @throws SecurityException Провоцируется, если например, нет прав.
      */
-    public static void movingFile(String filename, String destpath) throws IOException {
+    public static void movingFile(String filename, String destpath) throws IOException, SecurityException {
         File TargetFile = new File(filename);
 
         if (checkFileExists(filename)) {
@@ -174,8 +232,10 @@ public class FileControls {
      * Переименовать файл.
      * @param filename Путь до файла.
      * @param newfilename Новое имя файла.
+     * @throws IOException Сбой при обработке файла. Например, может быть, если файл не будет найден.
+     * @throws SecurityException Провоцируется, если например, нет прав.
      */
-    public static void renameFile(String filename, String newfilename) throws IOException {
+    public static void renameFile(String filename, String newfilename) throws IOException, SecurityException {
         File TargetFile = new File(filename);
 
         if (checkFileExists(filename)) {
@@ -193,8 +253,10 @@ public class FileControls {
      * Скопировать файл.
      * @param in_filename Путь до файла, который необходимо скопировать.
      * @param out_dir Путь, в который файл необходимо скопировать.
+     * @throws IOException Сбой при обработке файла. Например, может быть, если файл не будет найден.
+     * @throws SecurityException Провоцируется, если например, нет прав.
      */
-    public static void copyFile(String in_filename, String out_dir) throws IOException {
+    public static void copyFile(String in_filename, String out_dir) throws IOException, SecurityException {
         File in_f = new File(in_filename);
 
         if (checkFileExists(in_filename)) {
